@@ -5,6 +5,6 @@
 
 int main()
 {
-    printf("Sudoku!\n");
+    printf("Sudoku Solver!\n");
     return 0;
 }
