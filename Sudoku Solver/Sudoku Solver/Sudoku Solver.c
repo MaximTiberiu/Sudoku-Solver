@@ -10,9 +10,8 @@ int main()
 {
     unsigned char** sudo;
     readSudoku(&sudo, "sudoku.in");
-    printSudoku(sudo, "sudoku.out");
-
-    printf("Sudoku Solver!\n");
+    solveSudoku(sudo, "sudoku.out");
     destroySudoku(sudo);
+    
     return 0;
 }

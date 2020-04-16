@@ -1,8 +1,5 @@
 #pragma once
 
-/// I/O 
 void readSudoku(unsigned char***, char*);
-void printSudoku(unsigned char**, char*);
-
-/// mem
+void solveSudoku(unsigned char**, char*);
 void destroySudoku(unsigned char**);
