@@ -12,6 +12,5 @@ int main()
     readSudoku(&sudo, "sudoku.in");
     solveSudoku(sudo, "sudoku.out");
     destroySudoku(sudo);
-    
     return 0;
 }

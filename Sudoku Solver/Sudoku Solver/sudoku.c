@@ -95,20 +95,20 @@ bool verifyRow(unsigned char** sudo, unsigned int row, unsigned char num)
     /// parcurgem cele 9 coloane si testam
 
     for (unsigned int i = 0; i < size; i++)
-        if (num == sudo[row][i]) return true; // cifra se mai gaseste deja pe acest rand
-    return false; /// cifra este valida pe acest rand
+        if (num == sudo[row][i]) return false; // cifra se mai gaseste deja pe acest rand
+    return true; /// cifra este valida pe acest rand
 }
 
 /* verifyCol verifica daca cifra num este distincta pe coloana */
 bool verifyCol(unsigned char** sudo, unsigned int col, unsigned char num)
 {
     /// parcurgem cele 9 randuri si testam
-    for (unsigned int i = 0; i < 9; i++)
-        if (num == sudo[i][col]) return true; // cifra se mai gaseste deja pe aceasta coloana
-    return false; /// cifra este valida pe aceasta coloana
+    for (unsigned int i = 0; i < size; i++)
+        if (num == sudo[i][col]) return false; // cifra se mai gaseste deja pe aceasta coloana
+    return true; /// cifra este valida pe aceasta coloana
 }
 
-/// verifySquare verifica daca cifra num este distincta in submatricea 3x3 in care se afla
+/* verifySquare verifica daca cifra num este distincta in submatricea 3x3 in care se afla */
 bool verifySquare(unsigned char** sudo, unsigned int row, unsigned int col, unsigned char num)
 {
     /// !!! Input: row, col sunt coordonatele de start ale submatricei 3x3
@@ -117,25 +117,25 @@ bool verifySquare(unsigned char** sudo, unsigned int row, unsigned int col, unsi
     for (unsigned int i = 0; i < 3; i++)
         for (unsigned int j = 0; j < 3; j++)
             if (num == sudo[i + row][j + col]) /// i + row si j + col -> ne trimit in submatricea 3x3 unde se afla celula necompletata
-                return true; /// cifra se mai gaseste deja in aceasta submatrice
-    return false; /// cifra este valida in aceasta submatrice
+                return false; /// cifra se mai gaseste deja in aceasta submatrice
+    return true; /// cifra este valida in aceasta submatrice
 }
 
-/// isValid combina cele trei conditii (cele 3 functii de mai sus, iar daca trece de toate conditiile => cifra este valida la acea pozitie)
+/* isValid combina cele trei conditii (cele 3 functii de mai sus, iar daca trece de toate conditiile => cifra este valida la acea pozitie) */
 bool isValid(unsigned char** sudo, unsigned int row, unsigned int col, unsigned char num)
 {
     /// conditia necesara - sudo[row][col] == 0, altfel nu are rost sa mai testam mai departe
 
     if (sudo[row][col]) return false;
-    if (verifyRow(sudo, row, num)) return false;
-    if (verifyCol(sudo, col, num)) return false;
+    if (!verifyRow(sudo, row, num)) return false;
+    if (!verifyCol(sudo, col, num)) return false;
     row = row - row % 3; /// trebuie sa ajungem la prima pozitie din submatrice
     col = col - col % 3; /// de aceea efectuam scaderea cu row/col % 3 
-    if (verifySquare(sudo, row, col, num)) return false;
+    if (!verifySquare(sudo, row, col, num)) return false;
     return true; /// num indeplineste toate conditiile
 }
 
-/// sudokuSolution verifica daca exista o solutie
+/* sudokuSolution verifica daca exista o solutie */
 bool sudokuSolution(unsigned char*** sudo)
 {
     int row, col; /// preluam pozitia primei celule necompletate, in caz ca aceasta exista
@@ -167,6 +167,7 @@ bool sudokuSolution(unsigned char*** sudo)
     return false; // nu exista solutie
 }
 
+/* solveSudoku afiseaza solutia daca aceasta exista */
 void solveSudoku(unsigned char** sudo, char* outputFile)
 {
     if (sudokuSolution(&sudo))
